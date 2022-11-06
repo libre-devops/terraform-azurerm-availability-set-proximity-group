@@ -50,10 +50,10 @@ module "lnx_vm_availability_set" {
   vm_hostname        = "lnx${var.short}${var.loc}${terraform.workspace}"
   vm_size            = "Standard_B2ms"
   vm_os_simple       = "RHEL8Gen2"
-  vm_os_disk_size_gb = "266"
+  vm_os_disk_size_gb = "256"
 
   asg_name            = "asg-${element(regexall("[a-z]+", element(module.lnx_vm.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
-  availability_set_id = ""
+  availability_set_id = module.availability_set.availability_set_id
   availability_zone   = null
 
   admin_username = "LibreDevOpsAdmin"
@@ -65,7 +65,7 @@ module "lnx_vm_availability_set" {
   identity_type        = "SystemAssigned"
 }
 
-module "lnx_vm_availability_set" {
+module "lnx_vm_prox_group" {
   source = "registry.terraform.io/libre-devops/linux-vm/azurerm"
 
   rg_name  = module.rg.rg_name
@@ -76,10 +76,10 @@ module "lnx_vm_availability_set" {
   vm_hostname        = "lnx${var.short}${var.loc}${terraform.workspace}"
   vm_size            = "Standard_B2ms"
   vm_os_simple       = "RHEL8Gen2"
-  vm_os_disk_size_gb = "266"
+  vm_os_disk_size_gb = "256"
 
   asg_name                  = "asg-${element(regexall("[a-z]+", element(module.lnx_vm.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
-  proximity_placement_group = ""
+  proximity_placement_group = module.proximity_placement_group.proximity_placement_group_id
   availability_zone         = "alternate"
 
   admin_username = "LibreDevOpsAdmin"
@@ -115,6 +115,49 @@ resource "azurerm_network_security_rule" "allow_rules" {
   network_security_group_name = module.nsg.nsg_name
 }
 
-module "" {
-  source = ""
+module "availability_set" {
+  source = "registry.terraform.io/libre-devops/availability-set-proximity-group/azurerm"
+
+  rg_name  = module.rg.rg_name
+  location = module.rg.rg_location
+  tags     = module.rg.rg_tags
+
+  create_proximity_placement_group = false
+
+  create_availability_set      = true
+  availability_set_name        = "avs-${var.short}-${var.loc}-${terraform.workspace}"
+  platform_fault_domain_count  = 2
+  platform_update_domain_count = 1
+}
+
+module "proximity_placement_group" {
+  source = "registry.terraform.io/libre-devops/availability-set-proximity-group/azurerm"
+
+  rg_name  = module.rg.rg_name
+  location = module.rg.rg_location
+  tags     = module.rg.rg_tags
+
+  create_availability_set = false
+
+  create_proximity_placement_group = true
+  proximity_placement_group_name   = "ppg-${var.short}-${var.loc}-${terraform.workspace}"
+  platform_fault_domain_count      = 2
+  platform_update_domain_count     = 1
+}
+
+module "proximity_and_availability_set" {
+  source = "registry.terraform.io/libre-devops/availability-set-proximity-group/azurerm"
+
+  rg_name  = module.rg.rg_name
+  location = module.rg.rg_location
+  tags     = module.rg.rg_tags
+
+  create_proximity_placement_group = true
+  proximity_placement_group_name   = "ppg1-${var.short}-${var.loc}-${terraform.workspace}"
+
+  create_availability_set = true
+  availability_set_name   = "avs1-${var.short}-${var.loc}-${terraform.workspace}"
+
+  platform_fault_domain_count  = null
+  platform_update_domain_count = null
 }

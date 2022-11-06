@@ -1,6 +1,7 @@
 variable "availability_set_name" {
   description = "The name of an availability set if its created"
   type        = string
+  default     = null
 }
 
 variable "create_availability_set" {
@@ -12,18 +13,6 @@ variable "create_proximity_placement_group" {
   description = "Whether a proximity placement group should be created"
   type        = bool
   default     = false
-}
-
-variable "identity_ids" {
-  description = "Specifies a list of user managed identity ids to be assigned to the VM."
-  type        = list(string)
-  default     = []
-}
-
-variable "identity_type" {
-  description = "The Managed Service Identity Type of this Virtual Machine."
-  type        = string
-  default     = ""
 }
 
 variable "location" {

@@ -24,11 +24,9 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_availability_set_name"></a> [availability\_set\_name](#input\_availability\_set\_name) | The name of an availability set if its created | `string` | n/a | yes |
+| <a name="input_availability_set_name"></a> [availability\_set\_name](#input\_availability\_set\_name) | The name of an availability set if its created | `string` | `null` | no |
 | <a name="input_create_availability_set"></a> [create\_availability\_set](#input\_create\_availability\_set) | Whether an availability set should be created | `bool` | n/a | yes |
 | <a name="input_create_proximity_placement_group"></a> [create\_proximity\_placement\_group](#input\_create\_proximity\_placement\_group) | Whether a proximity placement group should be created | `bool` | `false` | no |
-| <a name="input_identity_ids"></a> [identity\_ids](#input\_identity\_ids) | Specifies a list of user managed identity ids to be assigned to the VM. | `list(string)` | `[]` | no |
-| <a name="input_identity_type"></a> [identity\_type](#input\_identity\_type) | The Managed Service Identity Type of this Virtual Machine. | `string` | `""` | no |
 | <a name="input_location"></a> [location](#input\_location) | The location for this resource to be put in | `string` | n/a | yes |
 | <a name="input_platform_fault_domain_count"></a> [platform\_fault\_domain\_count](#input\_platform\_fault\_domain\_count) | The number of platform fault domains | `number` | n/a | yes |
 | <a name="input_platform_update_domain_count"></a> [platform\_update\_domain\_count](#input\_platform\_update\_domain\_count) | The number of update domains | `number` | n/a | yes |
