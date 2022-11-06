@@ -75,7 +75,7 @@ module "availability_set" {
   create_proximity_placement_group = false
 
   create_availability_set      = true
-  availability_set_name        = "avs-${var.short}-${var.loc}-${terraform.workspace}"
+  availability_set_name        = "avail-${var.short}-${var.loc}-${terraform.workspace}-01"
   platform_fault_domain_count  = 2
   platform_update_domain_count = 1
 }
