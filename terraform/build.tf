@@ -52,7 +52,7 @@ module "lnx_vm_availability_set" {
   vm_os_simple       = "RHEL8Gen2"
   vm_os_disk_size_gb = "256"
 
-  asg_name            = "asg-${element(regexall("[a-z]+", element(module.lnx_vm_availability_set, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
+  asg_name            = "asg-${element(regexall("[a-z]+", element(module.lnx_vm_availability_set.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
   availability_set_id = module.availability_set.availability_set_id
   availability_zone   = null
 
