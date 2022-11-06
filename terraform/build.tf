@@ -53,7 +53,7 @@ module "lnx_vm_availability_set" {
   vm_os_disk_size_gb = "256"
 
   asg_name            = "asg-${element(regexall("[a-z]+", element(module.lnx_vm_availability_set.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
-  availability_set_id = element(values(module.availability_set.availability_set_id), 0)
+  availability_set_id = element(module.availability_set.availability_set_id, 0)
   availability_zone   = null
 
   admin_username = "LibreDevOpsAdmin"
