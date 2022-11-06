@@ -1,3 +1,19 @@
+variable "availability_set_name" {
+  description = "The name of an availability set if its created"
+  type        = string
+}
+
+variable "create_availability_set" {
+  description = "Whether an availability set should be created"
+  type        = bool
+}
+
+variable "create_proximity_placement_group" {
+  description = "Whether a proximity placement group should be created"
+  type        = bool
+  default     = false
+}
+
 variable "identity_ids" {
   description = "Specifies a list of user managed identity ids to be assigned to the VM."
   type        = list(string)
@@ -13,6 +29,22 @@ variable "identity_type" {
 variable "location" {
   description = "The location for this resource to be put in"
   type        = string
+}
+
+variable "platform_fault_domain_count" {
+  description = "The number of platform fault domains"
+  type        = number
+}
+
+variable "platform_update_domain_count" {
+  description = "The number of update domains"
+  type        = number
+}
+
+variable "proximity_placement_group_name" {
+  description = "The name of a proximity placement group"
+  type        = string
+  default     = null
 }
 
 variable "rg_name" {
