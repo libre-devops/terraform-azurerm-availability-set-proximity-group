@@ -1,6 +1,6 @@
 output "availability_set_id" {
   description = "The name of an availability set"
-  value       = var.create_availability_set == true && var.create_availability_set != null ? azurerm_availability_set.availability_set_with_proximity_placement_group.*.id : azurerm_availability_set.availability_set.*.id
+  value       = var.create_availability_set == true && var.create_availability_set != null ? azurerm_availability_set.availability_set.*.id : azurerm_availability_set.availability_set_with_proximity_placement_group.*.id
 }
 
 output "availability_set_name" {
