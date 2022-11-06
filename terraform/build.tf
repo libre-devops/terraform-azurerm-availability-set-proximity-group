@@ -78,9 +78,9 @@ module "lnx_vm_prox_group" {
   vm_os_simple       = "RHEL8Gen2"
   vm_os_disk_size_gb = "256"
 
-  asg_name                  = "asg-${element(regexall("[a-z]+", element(module.lnx_vm.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
-  proximity_placement_group = module.proximity_placement_group.proximity_placement_group_id
-  availability_zone         = "alternate"
+  asg_name                     = "asg-${element(regexall("[a-z]+", element(module.lnx_vm.vm_name, 0)), 0)}-${var.short}-${var.loc}-${terraform.workspace}-01" //asg-vmldoeuwdev-ldo-euw-dev-01 - Regex strips all numbers from string
+  proximity_placement_group_id = module.proximity_placement_group.proximity_placement_group_id
+  availability_zone            = "alternate"
 
   admin_username = "LibreDevOpsAdmin"
   admin_password = data.azurerm_key_vault_secret.mgmt_local_admin_pwd.value
